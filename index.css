@@ -1,0 +1,63 @@
+body {
+    background-image: url('./asset/background.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 20px 0;
+}
+
+.content {
+    width: 60%;
+    max-width: 680px;
+    min-width: 320px;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+header, main, footer {
+    padding: 1rem;
+}
+
+header, footer {
+    background-color: black;
+    color: white;
+}
+
+header {
+    height: 150px;
+}
+
+.title {
+    text-align: center;
+    font-weight: bold;
+}
+
+.header__button-container {
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+}
+
+.header__button {
+    width: 100px;
+    background-color: red;
+    color: white;
+    border-style: none;
+    cursor: pointer;
+}
+
+main {
+    height: 100%;
+    opacity: 60%;
+    background-color: #e5782b;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    font-size: 12px;
+    word-break: keep-all;
+}
