@@ -1,7 +1,8 @@
 export class MediaModal {
-    // (title, url)
-    getModalTemplateContent() {
-        return (`
+    constructor() {
+        // (title, url)
+        this.getModalTemplateContent = () => {
+            return (`
             <div class="modal__input">
                 <label for="title" class="modal__input-label">title</label>
                 <input type="text" id="title" />
@@ -11,12 +12,14 @@ export class MediaModal {
                 <input type="text" id="url" />
             </div>
        `);
+        };
     }
 }
 export class TextModal {
-    // (title, body)
-    getModalTemplateContent() {
-        return (`
+    constructor() {
+        // (title, body)
+        this.getModalTemplateContent = () => {
+            return (`
             <div class="modal__input">
                 <label for="title" class="modal__input-label">title</label>
                 <input type="text" id="title" />
@@ -26,6 +29,7 @@ export class TextModal {
                 <textarea rows="2" cols="30" id="body"></textarea>
             </div>
         `);
+        };
     }
 }
 //# sourceMappingURL=modalTemplate.js.map

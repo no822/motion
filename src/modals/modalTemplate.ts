@@ -4,7 +4,7 @@ export interface ModalContentTemplateMaker {
 
 export class MediaModal implements ModalContentTemplateMaker {
     // (title, url)
-    getModalTemplateContent(): string {
+    getModalTemplateContent = (): string => {
        return (`
             <div class="modal__input">
                 <label for="title" class="modal__input-label">title</label>
@@ -20,7 +20,7 @@ export class MediaModal implements ModalContentTemplateMaker {
 
 export class TextModal implements ModalContentTemplateMaker {
     // (title, body)
-    getModalTemplateContent(): string {
+    getModalTemplateContent = (): string => {
         return (`
             <div class="modal__input">
                 <label for="title" class="modal__input-label">title</label>

@@ -40,7 +40,11 @@ class ImplMain implements Main {
         // todo 추가, 삭제, 순서변경(+ 수정) 될때 호출되어야 한다
     }
 
-    private enrollEvent(): void {
+    toggleIsModal = (): void => {
+        this.isModal = false;
+    }
+
+    private enrollEvent = (): void => {
         const body = (document.querySelector('body')) as HTMLBodyElement;
         const imageButton: HTMLButtonElement = (document.querySelector('#image-button')) as HTMLButtonElement;
         const videoButton: HTMLButtonElement = (document.querySelector('#video-button')) as HTMLButtonElement;
@@ -52,30 +56,34 @@ class ImplMain implements Main {
 
         imageButton.addEventListener('click', () => {
             if (this.isModal) return;
-            const templateMaker: ImplModalMaker = new ImplModalMaker(mediaModal, this.isModal);
+            const templateMaker: ImplModalMaker = new ImplModalMaker(mediaModal, this.toggleIsModal) ;
             body.append(templateMaker.makeModalElement());
+            this.isModal = true;
         })
 
         videoButton.addEventListener('click', () => {
             if (this.isModal) return;
-            const templateMaker: ImplModalMaker = new ImplModalMaker(mediaModal, this.isModal);
+            const templateMaker: ImplModalMaker = new ImplModalMaker(mediaModal, this.toggleIsModal);
             body.append(templateMaker.makeModalElement());
+            this.isModal = true;
         })
 
         noteButton.addEventListener('click', () => {
             if (this.isModal) return;
-            const templateMaker: ImplModalMaker = new ImplModalMaker(textModal, this.isModal);
+            const templateMaker: ImplModalMaker = new ImplModalMaker(textModal, this.toggleIsModal);
             body.append(templateMaker.makeModalElement());
+            this.isModal = true;
         })
 
         taskButton.addEventListener('click', () => {
             if (this.isModal) return;
-            const templateMaker: ImplModalMaker = new ImplModalMaker(textModal, this.isModal);
+            const templateMaker: ImplModalMaker = new ImplModalMaker(textModal, this.toggleIsModal);
             body.append(templateMaker.makeModalElement());
+            this.isModal = true;
         })
     }
 
-    init(): void {
+    init = (): void => {
         console.log('init');
         this.enrollEvent();
     }
