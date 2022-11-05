@@ -17,9 +17,11 @@ export class ImplModalMaker {
             this.toggleIsModal(false);
         };
         this.addSection = (modal, modalInfo) => {
-            console.log(modalInfo);
             // (modalInfo: SectionInfo) => HTMLDivElement;
+            const container = document.querySelector('.main__section-container');
             const sectionElement = this.sectionMaker.createSection(modalInfo);
+            console.log(sectionElement);
+            container.append(sectionElement);
             this.closeModal(modal);
         };
         this.enrollModalEvents = (modal) => {
@@ -28,7 +30,7 @@ export class ImplModalMaker {
             closeButton.addEventListener('click', () => {
                 this.closeModal(modal);
             });
-            // 2. section input 입력 이벤트(onChange)
+            // 2. section 추가 이벤트
             const addButton = (modal.querySelector('.modal__add-button'));
             addButton.addEventListener('click', () => {
                 const title = modal.querySelector('#title');
@@ -48,4 +50,4 @@ export class ImplModalMaker {
         };
     }
 }
-//# sourceMappingURL=modalWrapper.js.map
+//# sourceMappingURL=modalMaker.js.map

@@ -42,16 +42,61 @@ header {
 
 .header__button {
     width: 100px;
+    height: 35px;
+    cursor: pointer;
     background-color: red;
     color: white;
     border-style: none;
-    cursor: pointer;
 }
 
-main {
+main.main__section-container {
     height: 100%;
-    opacity: 60%;
-    background-color: #e5782b;
+    /* 29 20 43 */
+    background-color: rgba(23, 22, 22, 0.6);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow-y: scroll;
+    /* scrollbar hide */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+main.main__section-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}
+
+/* 4가지 종류의 섹션 관련 스타일 */
+.section {
+    display: flex;
+    background-color: rgb(37, 36, 36);
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    color: white;
+}
+
+.section > .image-area {
+    min-width: 60%;
+}
+
+.section > .title-area {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.section__title {
+    padding: 5px;
+    text-align: left;
+}
+
+.section__close {
+    position: absolute;
+    color: red;
+    right: 5px;
+    top: 40%;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
 }
 
 footer {
@@ -75,7 +120,7 @@ footer {
     background: black;
     background: -webkit-linear-gradient(left, #2f2e2e, #4b4a4a, #2f2e2e);
     background: -moz-linear-gradient(left, #2f2e2e, #4b4a4a, #2f2e2e);
-    opacity: 80%;
+    opacity: 95%;
     border-radius: 3%;
 }
 
@@ -121,4 +166,5 @@ footer {
     color: white;
     border-style: none;
     width: 80px;
+    cursor: pointer;
 }

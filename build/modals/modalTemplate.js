@@ -22,7 +22,7 @@ export class TextModal {
             return (`
             <div class="modal__input">
                 <label for="title" class="modal__input-label">title</label>
-                <input type="text" id="title" />
+                <input type="text" id="title"/>
             </div>
             <div class="modal__input">
                 <label for="body" class="modal__input-label">body</label>
