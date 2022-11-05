@@ -5,7 +5,7 @@ export class ImplModalMaker {
     }
     makeTemplate() {
         return (`
-            <div class="modal__close">ｘ</div>
+            <button class="modal__close">𝖷</button>
                 ${this.maker.getModalTemplateContent()}
             <div class="modal__buttons">
                 <button>추가</button>
