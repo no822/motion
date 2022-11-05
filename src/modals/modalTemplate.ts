@@ -1,10 +1,10 @@
-export interface ModalMaker {
-    getModalContent(): string;
+export interface ModalContentTemplateMaker {
+    getModalTemplateContent(): string;
 }
 
-export class MediaModal implements ModalMaker {
+export class MediaModal implements ModalContentTemplateMaker {
     // (title, url)
-    getModalContent(): string {
+    getModalTemplateContent(): string {
        return (`
             <div class="modal__input">
                 <label for="title" class="modal__input-label">title</label>
@@ -14,13 +14,13 @@ export class MediaModal implements ModalMaker {
                 <label for="url" class="modal__input-label">url</label>
                 <input type="text" id="url" />
             </div>
-        `);
+       `);
     }
 }
 
-export class TextModal implements ModalMaker {
+export class TextModal implements ModalContentTemplateMaker {
     // (title, body)
-    getModalContent(): string {
+    getModalTemplateContent(): string {
         return (`
             <div class="modal__input">
                 <label for="title" class="modal__input-label">title</label>

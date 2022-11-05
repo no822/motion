@@ -1,6 +1,6 @@
 export class MediaModal {
     // (title, url)
-    getModalContent() {
+    getModalTemplateContent() {
         return (`
             <div class="modal__input">
                 <label for="title" class="modal__input-label">title</label>
@@ -10,12 +10,12 @@ export class MediaModal {
                 <label for="url" class="modal__input-label">url</label>
                 <input type="text" id="url" />
             </div>
-        `);
+       `);
     }
 }
 export class TextModal {
     // (title, body)
-    getModalContent() {
+    getModalTemplateContent() {
         return (`
             <div class="modal__input">
                 <label for="title" class="modal__input-label">title</label>

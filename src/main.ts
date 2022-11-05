@@ -1,5 +1,5 @@
-import {MediaModal, ModalMaker, TextModal} from "./modals/modalTemplate.js";
-import { ModalTemplate, ImplModalTemplate } from "./modals/modalWrapper.js";
+import {MediaModal, ModalContentTemplateMaker, TextModal} from "./modals/modalTemplate.js";
+import { ModalMaker, ImplModalMaker } from "./modals/modalWrapper.js";
 
 // - must have
     // - As a user, I want to add an image
@@ -25,6 +25,8 @@ import { ModalTemplate, ImplModalTemplate } from "./modals/modalWrapper.js";
         // 2.2 값 입력 후 등록 누르면 섹션(+ 컨텐츠) 렌더링
     // 3. 각 섹션의 삭제버튼
 
+type Modal = HTMLDivElement | undefined | null;
+
 interface Main {
     list: Array<string>
     init(): void;
@@ -32,7 +34,7 @@ interface Main {
 
 class ImplMain implements Main {
     list: Array<string> = [];
-    private modal?: HTMLDivElement;
+    isModal: boolean = false;
 
     private renderList(): void {
         // todo 추가, 삭제, 순서변경(+ 수정) 될때 호출되어야 한다
@@ -42,38 +44,34 @@ class ImplMain implements Main {
         const body = (document.querySelector('body')) as HTMLBodyElement;
         const imageButton: HTMLButtonElement = (document.querySelector('#image-button')) as HTMLButtonElement;
         const videoButton: HTMLButtonElement = (document.querySelector('#video-button')) as HTMLButtonElement;
-        const noteButton: HTMLButtonElement = (document.querySelector('#note-button')) as HTMLButtonElement;
-        const taskButton: HTMLButtonElement = (document.querySelector('#task-button')) as HTMLButtonElement;
+        const noteButton : HTMLButtonElement = (document.querySelector('#note-button')) as HTMLButtonElement;
+        const taskButton : HTMLButtonElement = (document.querySelector('#task-button')) as HTMLButtonElement;
 
-        const mediaModal: ModalMaker = new MediaModal();
-        const textModal: ModalMaker = new TextModal();
+        const mediaModal: ModalContentTemplateMaker = new MediaModal();
+        const textModal : ModalContentTemplateMaker = new TextModal();
 
         imageButton.addEventListener('click', () => {
-            if (this.modal) return;
-            const templateMaker: ImplModalTemplate = new ImplModalTemplate(mediaModal);
-            this.modal = templateMaker.makeModalElement();
-            body.append(this.modal);
+            if (this.isModal) return;
+            const templateMaker: ImplModalMaker = new ImplModalMaker(mediaModal, this.isModal);
+            body.append(templateMaker.makeModalElement());
         })
 
         videoButton.addEventListener('click', () => {
-            if (this.modal) return;
-            const templateMaker: ImplModalTemplate = new ImplModalTemplate(mediaModal);
-            this.modal = templateMaker.makeModalElement();
-            body.append(this.modal);
+            if (this.isModal) return;
+            const templateMaker: ImplModalMaker = new ImplModalMaker(mediaModal, this.isModal);
+            body.append(templateMaker.makeModalElement());
         })
 
         noteButton.addEventListener('click', () => {
-            if (this.modal) return;
-            const templateMaker: ImplModalTemplate = new ImplModalTemplate(textModal);
-            this.modal = templateMaker.makeModalElement();
-            body.append(this.modal);
+            if (this.isModal) return;
+            const templateMaker: ImplModalMaker = new ImplModalMaker(textModal, this.isModal);
+            body.append(templateMaker.makeModalElement());
         })
 
         taskButton.addEventListener('click', () => {
-            if (this.modal) return;
-            const templateMaker: ImplModalTemplate = new ImplModalTemplate(textModal);
-            this.modal = templateMaker.makeModalElement();
-            body.append(this.modal);
+            if (this.isModal) return;
+            const templateMaker: ImplModalMaker = new ImplModalMaker(textModal, this.isModal);
+            body.append(templateMaker.makeModalElement());
         })
     }
 

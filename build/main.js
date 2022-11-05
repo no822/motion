@@ -1,8 +1,9 @@
 import { MediaModal, TextModal } from "./modals/modalTemplate.js";
-import { ImplModalTemplate } from "./modals/modalWrapper.js";
+import { ImplModalMaker } from "./modals/modalWrapper.js";
 class ImplMain {
     constructor() {
         this.list = [];
+        this.isModal = false;
     }
     renderList() {
         // todo 추가, 삭제, 순서변경(+ 수정) 될때 호출되어야 한다
@@ -16,32 +17,28 @@ class ImplMain {
         const mediaModal = new MediaModal();
         const textModal = new TextModal();
         imageButton.addEventListener('click', () => {
-            if (this.modal)
+            if (this.isModal)
                 return;
-            const templateMaker = new ImplModalTemplate(mediaModal);
-            this.modal = templateMaker.makeModalElement();
-            body.append(this.modal);
+            const templateMaker = new ImplModalMaker(mediaModal, this.isModal);
+            body.append(templateMaker.makeModalElement());
         });
         videoButton.addEventListener('click', () => {
-            if (this.modal)
+            if (this.isModal)
                 return;
-            const templateMaker = new ImplModalTemplate(mediaModal);
-            this.modal = templateMaker.makeModalElement();
-            body.append(this.modal);
+            const templateMaker = new ImplModalMaker(mediaModal, this.isModal);
+            body.append(templateMaker.makeModalElement());
         });
         noteButton.addEventListener('click', () => {
-            if (this.modal)
+            if (this.isModal)
                 return;
-            const templateMaker = new ImplModalTemplate(textModal);
-            this.modal = templateMaker.makeModalElement();
-            body.append(this.modal);
+            const templateMaker = new ImplModalMaker(textModal, this.isModal);
+            body.append(templateMaker.makeModalElement());
         });
         taskButton.addEventListener('click', () => {
-            if (this.modal)
+            if (this.isModal)
                 return;
-            const templateMaker = new ImplModalTemplate(textModal);
-            this.modal = templateMaker.makeModalElement();
-            body.append(this.modal);
+            const templateMaker = new ImplModalMaker(textModal, this.isModal);
+            body.append(templateMaker.makeModalElement());
         });
     }
     init() {
