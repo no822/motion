@@ -16,17 +16,17 @@
     <title>MOTION</title>
     <link href="./reset.css" rel="stylesheet"/>
     <link href="./index.css" rel="stylesheet"/>
-    <script src="./build/main.js"></script>
+    <script src="./build/main.js" type="module"></script>
 </head>
 <body>
     <div class="content">
         <header>
             <h1 class="title">MOTION</h1>
             <ul class="header__button-container">
-                <button class="header__button" class="button__image">IMAGE</button>
-                <button class="header__button" class="button__video">VIDEO</button>
-                <button class="header__button" class="button__note">NOTE</button>
-                <button class="header__button" class="button__task">TASK</button>
+                <button id="image-button" class="header__button" class="button__image">IMAGE</button>
+                <button id="video-button" class="header__button" class="button__video">VIDEO</button>
+                <button id="note-button" class="header__button" class="button__note">NOTE</button>
+                <button id="task-button" class="header__button" class="button__task">TASK</button>
             </ul>
         </header>
         <main class="main__section-container">

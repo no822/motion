@@ -37,6 +37,7 @@ header {
     display: flex;
     gap: 4px;
     justify-content: center;
+    padding: 0;
 }
 
 .header__button {
@@ -60,4 +61,60 @@ footer {
     height: 60px;
     font-size: 12px;
     word-break: keep-all;
+}
+
+.modal__container {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    right: 50%;
+    top: 50%;
+    transform: translate(50%, -50%);
+    padding: 3rem 1rem 1rem 1rem;
+    background: black;
+    background: -webkit-linear-gradient(left, #2f2e2e, #4b4a4a, #2f2e2e);
+    background: -moz-linear-gradient(left, #2f2e2e, #4b4a4a, #2f2e2e);
+    opacity: 80%;
+    border-radius: 3%;
+}
+
+.modal__input {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.modal__input > input {
+    min-width: 250px;
+}
+
+.modal__input-label {
+    display: block;
+    color: white;
+    width: 25px;
+}
+
+.modal__input > textarea {
+    resize: none;
+}
+
+.modal__close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+    color: red;
+}
+
+.modal__buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 2px;
+}
+
+.modal__buttons > button {
+    background-color: red;
+    color: white;
+    border-style: none;
 }
