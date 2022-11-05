@@ -35,17 +35,15 @@ export class ImplModalMaker implements ModalMaker {
         this.toggleIsModal(false);
     }
 
-    private addSection = (modal: HTMLDivElement, modalInfo: SectionInfo) => {
+    private addSection = (modal: HTMLDivElement, modalInfo: SectionInfo): void => {
         // (modalInfo: SectionInfo) => HTMLDivElement;
         const container = document.querySelector('.main__section-container') as HTMLDivElement;
         const sectionElement = this.sectionMaker.createSection(modalInfo);
-
-        console.log(sectionElement)
         container.append(sectionElement);
         this.closeModal(modal);
     }
 
-    private enrollModalEvents = (modal: HTMLDivElement) => {
+    private enrollModalEvents = (modal: HTMLDivElement): void => {
         // 1. 모달 닫기 이벤트
         const closeButton = (modal.querySelector('.modal__close')) as HTMLButtonElement;
         closeButton.addEventListener('click', () => {

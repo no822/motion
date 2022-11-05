@@ -1,4 +1,4 @@
-import { SectionMaker, Section } from "./sectionMaker.js";
+import { Section } from "./sectionMaker.js";
 import { SectionInfo } from "../modals/modalMaker.js";
 
 class ImageSection extends Section {

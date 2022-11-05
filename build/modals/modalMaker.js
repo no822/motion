@@ -20,7 +20,6 @@ export class ImplModalMaker {
             // (modalInfo: SectionInfo) => HTMLDivElement;
             const container = document.querySelector('.main__section-container');
             const sectionElement = this.sectionMaker.createSection(modalInfo);
-            console.log(sectionElement);
             container.append(sectionElement);
             this.closeModal(modal);
         };
