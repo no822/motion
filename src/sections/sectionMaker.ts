@@ -8,11 +8,12 @@ import { SectionInfo } from "../modals/modalMaker.js";
     // 3.2 생성한 element를 .main__section-container에 append
 
 export interface SectionMaker {
-    // create, edit, delete
+    // create, edit, delete(private)
     createSection(modalInfo: SectionInfo): HTMLDivElement;
 }
 
 export abstract class Section implements SectionMaker {
+    protected constructor(private deleteSection: (targetElement: HTMLDivElement) => void) {}
     abstract makeSectionTemplate(title: string, urlOrBody: string): string;
 
     private getSectionTemplate = (modalInfo: SectionInfo): string => {
@@ -27,16 +28,24 @@ export abstract class Section implements SectionMaker {
         }
     }
 
-    protected parseInfo = (modalInfo: SectionInfo): HTMLDivElement => {
+    private getElementWithDeleteEvent = (element: HTMLDivElement): HTMLDivElement => {
+        const deleteButton = element.querySelector('.section__close') as HTMLButtonElement;
+        deleteButton.addEventListener('click', () => {
+            this.deleteSection(element);
+        });
+        return element;
+    }
+
+    private getSection = (modalInfo: SectionInfo): HTMLDivElement => {
         const sectionTemplate = this.getSectionTemplate(modalInfo);
         const sectionContainer = document.createElement('div');
         sectionContainer.classList.add('section');
         sectionContainer.innerHTML = sectionTemplate;
-        return sectionContainer;
+        return this.getElementWithDeleteEvent(sectionContainer);
     }
 
     createSection = (modalInfo: SectionInfo): HTMLDivElement => {
-        const section = this.parseInfo(modalInfo);
+        const section = this.getSection(modalInfo);
         return section;
     };
 }

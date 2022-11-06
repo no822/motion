@@ -1,7 +1,7 @@
 import { Section } from "./sectionMaker.js";
 class NoteSection extends Section {
-    constructor() {
-        super(...arguments);
+    constructor(deleteSection) {
+        super(deleteSection);
         this.makeSectionTemplate = (title, body) => {
             return (`
              <div class="title-area">

@@ -1,6 +1,10 @@
 import { Section } from "./sectionMaker.js";
 
 class TaskSection extends Section {
+    constructor(deleteSection: (targetElement: HTMLDivElement) => void) {
+        super(deleteSection);
+    }
+
     makeSectionTemplate = (title: string, body: string): string => {
         return (`
             <div class="title-area">

@@ -1,5 +1,6 @@
 export class Section {
-    constructor() {
+    constructor(deleteSection) {
+        this.deleteSection = deleteSection;
         this.getSectionTemplate = (modalInfo) => {
             if (modalInfo.url != null) {
                 const { title, url } = modalInfo;
@@ -12,15 +13,22 @@ export class Section {
                 return sectionTemplate;
             }
         };
-        this.parseInfo = (modalInfo) => {
+        this.getElementWithDeleteEvent = (element) => {
+            const deleteButton = element.querySelector('.section__close');
+            deleteButton.addEventListener('click', () => {
+                this.deleteSection(element);
+            });
+            return element;
+        };
+        this.getSection = (modalInfo) => {
             const sectionTemplate = this.getSectionTemplate(modalInfo);
             const sectionContainer = document.createElement('div');
             sectionContainer.classList.add('section');
             sectionContainer.innerHTML = sectionTemplate;
-            return sectionContainer;
+            return this.getElementWithDeleteEvent(sectionContainer);
         };
         this.createSection = (modalInfo) => {
-            const section = this.parseInfo(modalInfo);
+            const section = this.getSection(modalInfo);
             return section;
         };
     }

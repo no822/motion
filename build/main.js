@@ -11,6 +11,7 @@ class ImplMain {
         this.renderList = (list) => {
             // todo 추가, 삭제, 순서변경(+ 수정) 될때 호출되어야 한다
             const container = document.querySelector('.main__section-container');
+            container.innerHTML = '';
             list.forEach(section => {
                 container.append(section);
             });
@@ -20,6 +21,11 @@ class ImplMain {
         };
         this.addSectionElement = (sectionElement) => {
             this.list = [...this.list, sectionElement];
+            this.renderList(this.list);
+        };
+        this.deleteSectionElement = (sectionElement) => {
+            this.list = [...this.list.filter(section => section !== sectionElement)];
+            console.log(this.list);
             this.renderList(this.list);
         };
         this.modalEvent = (button, contentTemplateMaker, sectionMaker) => {
@@ -39,10 +45,11 @@ class ImplMain {
             const taskButton = (document.querySelector('#task-button'));
             const mediaModal = new MediaModal();
             const textModal = new TextModal();
-            const imageSection = new ImageSection();
-            const videoSection = new VideoSection();
-            const noteSection = new NoteSection();
-            const taskSection = new TaskSection();
+            // todo filterList 함수 생성자로 넘겨주어야 한다
+            const imageSection = new ImageSection(this.deleteSectionElement);
+            const videoSection = new VideoSection(this.deleteSectionElement);
+            const noteSection = new NoteSection(this.deleteSectionElement);
+            const taskSection = new TaskSection(this.deleteSectionElement);
             this.modalEvent(imageButton, mediaModal, imageSection);
             this.modalEvent(videoButton, mediaModal, videoSection);
             this.modalEvent(noteButton, textModal, noteSection);

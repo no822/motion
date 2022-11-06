@@ -1,7 +1,7 @@
 import { Section } from "./sectionMaker.js";
 class VideoSection extends Section {
-    constructor() {
-        super(...arguments);
+    constructor(deleteSection) {
+        super(deleteSection);
         this.makeSectionTemplate = (title, url) => {
             // <!-- https://picsum.photos/800/400 -->
             return (`

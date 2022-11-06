@@ -36,6 +36,7 @@ class ImplMain implements Main {
     private renderList = (list: Array<HTMLDivElement>): void => {
         // todo 추가, 삭제, 순서변경(+ 수정) 될때 호출되어야 한다
         const container = document.querySelector('.main__section-container') as HTMLDivElement;
+        container.innerHTML = '';
         list.forEach(section => {
             container.append(section);
         })
@@ -49,6 +50,13 @@ class ImplMain implements Main {
         this.list = [...this.list, sectionElement];
         this.renderList(this.list);
     }
+
+    deleteSectionElement = (sectionElement: HTMLDivElement): void => {
+        this.list = [...this.list.filter(section => section !== sectionElement)];
+        console.log(this.list)
+        this.renderList(this.list);
+    }
+
 
     private modalEvent = (
         button: HTMLButtonElement,
@@ -78,10 +86,11 @@ class ImplMain implements Main {
         const mediaModal: ModalContentTemplateMaker = new MediaModal();
         const textModal : ModalContentTemplateMaker = new TextModal();
 
-        const imageSection: SectionMaker = new ImageSection();
-        const videoSection: SectionMaker = new VideoSection();
-        const noteSection : SectionMaker = new NoteSection();
-        const taskSection : SectionMaker = new TaskSection();
+        // todo filterList 함수 생성자로 넘겨주어야 한다
+        const imageSection: SectionMaker = new ImageSection(this.deleteSectionElement);
+        const videoSection: SectionMaker = new VideoSection(this.deleteSectionElement);
+        const noteSection : SectionMaker = new NoteSection(this.deleteSectionElement);
+        const taskSection : SectionMaker = new TaskSection(this.deleteSectionElement);
 
         this.modalEvent(imageButton, mediaModal, imageSection);
         this.modalEvent(videoButton, mediaModal, videoSection);
