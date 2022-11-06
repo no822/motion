@@ -15,7 +15,7 @@
 
    - 구현계획
      - must have
-       - [] As a user, I want to add an image
+       - As a user, I want to add an image
        - As a user, I want to add youtube video
        - As a user, I want to add a note
        - As a user, I want to add todo list

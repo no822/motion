@@ -1,5 +1,5 @@
 import { ModalContentTemplateMaker } from "./modalTemplate.js";
-import { SectionMaker, Section } from "../sections/sectionMaker.js";
+import { SectionMaker } from "../sections/sectionMaker.js";
 
 // 모달 헤더, 닫기 등 종류와 관련없이 공통적인 부분
 
@@ -17,29 +17,19 @@ export class ImplModalMaker implements ModalMaker {
     constructor(
         private contentMaker: ModalContentTemplateMaker,
         private sectionMaker: SectionMaker,
-        private toggleIsModal: (isModal: boolean) => void
+        private toggleIsModal: (isModal: boolean) => void,
+        private addSectionElement: (sectionElement: HTMLDivElement) => void
     ) {}
-
-    private makeTemplate = (): string => {
-        return (`
-            <button class="modal__close">𝖷</button>
-                ${this.contentMaker.getModalTemplateContent()}
-            <div class="modal__buttons">
-                <button class="modal__add-button">추가</button>
-            </div>
-        `);
-    }
 
     private closeModal = (modal: HTMLDivElement): void => {
         modal.remove();
         this.toggleIsModal(false);
     }
 
-    private addSection = (modal: HTMLDivElement, modalInfo: SectionInfo): void => {
+    private addSectionButtonClickHandler = (modal: HTMLDivElement, modalInfo: SectionInfo): void => {
         // (modalInfo: SectionInfo) => HTMLDivElement;
-        const container = document.querySelector('.main__section-container') as HTMLDivElement;
         const sectionElement = this.sectionMaker.createSection(modalInfo);
-        container.append(sectionElement);
+        this.addSectionElement(sectionElement);
         this.closeModal(modal);
     }
 
@@ -57,11 +47,21 @@ export class ImplModalMaker implements ModalMaker {
             const url   = modal.querySelector('#url')   as HTMLInputElement;
             const body  = modal.querySelector('#body')  as HTMLInputElement;
 
-            const sectionInfo: SectionInfo = (url !== null) ?
+            const sectionInfo: SectionInfo = (url != null) ?
                 { title: title.value, url: url.value } : { title: title.value, body: body.value };
 
-            this.addSection(modal, sectionInfo);
+            this.addSectionButtonClickHandler(modal, sectionInfo);
         })
+    }
+
+    private makeTemplate = (): string => {
+        return (`
+            <button class="modal__close">𝖷</button>
+                ${this.contentMaker.getModalTemplateContent()}
+            <div class="modal__buttons">
+                <button class="modal__add-button">추가</button>
+            </div>
+        `);
     }
 
     makeModalElement = (): HTMLDivElement => {

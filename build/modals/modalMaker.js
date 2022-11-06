@@ -1,26 +1,17 @@
 export class ImplModalMaker {
-    constructor(contentMaker, sectionMaker, toggleIsModal) {
+    constructor(contentMaker, sectionMaker, toggleIsModal, addSectionElement) {
         this.contentMaker = contentMaker;
         this.sectionMaker = sectionMaker;
         this.toggleIsModal = toggleIsModal;
-        this.makeTemplate = () => {
-            return (`
-            <button class="modal__close">𝖷</button>
-                ${this.contentMaker.getModalTemplateContent()}
-            <div class="modal__buttons">
-                <button class="modal__add-button">추가</button>
-            </div>
-        `);
-        };
+        this.addSectionElement = addSectionElement;
         this.closeModal = (modal) => {
             modal.remove();
             this.toggleIsModal(false);
         };
-        this.addSection = (modal, modalInfo) => {
+        this.addSectionButtonClickHandler = (modal, modalInfo) => {
             // (modalInfo: SectionInfo) => HTMLDivElement;
-            const container = document.querySelector('.main__section-container');
             const sectionElement = this.sectionMaker.createSection(modalInfo);
-            container.append(sectionElement);
+            this.addSectionElement(sectionElement);
             this.closeModal(modal);
         };
         this.enrollModalEvents = (modal) => {
@@ -35,10 +26,19 @@ export class ImplModalMaker {
                 const title = modal.querySelector('#title');
                 const url = modal.querySelector('#url');
                 const body = modal.querySelector('#body');
-                const sectionInfo = (url !== null) ?
+                const sectionInfo = (url != null) ?
                     { title: title.value, url: url.value } : { title: title.value, body: body.value };
-                this.addSection(modal, sectionInfo);
+                this.addSectionButtonClickHandler(modal, sectionInfo);
             });
+        };
+        this.makeTemplate = () => {
+            return (`
+            <button class="modal__close">𝖷</button>
+                ${this.contentMaker.getModalTemplateContent()}
+            <div class="modal__buttons">
+                <button class="modal__add-button">추가</button>
+            </div>
+        `);
         };
         this.makeModalElement = () => {
             const modal = document.createElement('div');

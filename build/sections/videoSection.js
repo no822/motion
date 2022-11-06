@@ -1,11 +1,19 @@
 import { Section } from "./sectionMaker.js";
 class VideoSection extends Section {
     constructor() {
-        super();
-        this.createSection = (modalInfo) => {
-            return document.createElement('div');
+        super(...arguments);
+        this.makeSectionTemplate = (title, url) => {
+            // <!-- https://picsum.photos/800/400 -->
+            return (`
+            <div class="image-area">
+                <img src=${url} alt="section image">
+            </div>
+            <div class="title-area">
+                <div class="section__title">${title}</div>
+                <button class="section__close">𝘹</button>
+            </div>
+        `);
         };
-        this.html = '<div></div>';
     }
 }
 export default VideoSection;

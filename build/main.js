@@ -8,15 +8,26 @@ class ImplMain {
     constructor() {
         this.list = [];
         this.isModal = false;
+        this.renderList = (list) => {
+            // todo 추가, 삭제, 순서변경(+ 수정) 될때 호출되어야 한다
+            const container = document.querySelector('.main__section-container');
+            list.forEach(section => {
+                container.append(section);
+            });
+        };
         this.toggleIsModal = (isModal) => {
             this.isModal = isModal;
+        };
+        this.addSectionElement = (sectionElement) => {
+            this.list = [...this.list, sectionElement];
+            this.renderList(this.list);
         };
         this.modalEvent = (button, contentTemplateMaker, sectionMaker) => {
             button.addEventListener('click', () => {
                 if (this.isModal)
                     return;
                 const body = (document.querySelector('body'));
-                const templateMaker = new ImplModalMaker(contentTemplateMaker, sectionMaker, this.toggleIsModal);
+                const templateMaker = new ImplModalMaker(contentTemplateMaker, sectionMaker, this.toggleIsModal, this.addSectionElement);
                 body.append(templateMaker.makeModalElement());
                 this.isModal = true;
             });
@@ -41,9 +52,6 @@ class ImplMain {
             console.log('init');
             this.enrollEvent();
         };
-    }
-    renderList() {
-        // todo 추가, 삭제, 순서변경(+ 수정) 될때 호출되어야 한다
     }
 }
 const main = new ImplMain();

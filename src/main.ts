@@ -7,45 +7,47 @@ import NoteSection  from "./sections/noteSection.js";
 import TaskSection  from "./sections/taskSection.js";
 
 // - must have
-    // - As a user, I want to add an image
+    // - As a user, I want to add an image ✓
     // - As a user, I want to add YouTube video
-    // - As a user, I want to add a note
-    // - As a user, I want to add Todolist
+    // - As a user, I want to add a note ✓
+    // - As a user, I want to add Todolist ✓
     // - As a user, I want to delete sections
 
 // < 스스로 고민해서 구현해보기 >
-// class diagram?
-// <주요 actors 생각해보기>
-    // 각 섹션(IMAGE / VIDEO / NOTE / TASK)
-    // 2종류의 모달창
-    // main - 어플리케이션 최초 실행
-        // 버튼 이벤트 리스닝
-        // 4가지 섹션 클래스
-        // 2가지 모달 클래스
 
 // <interaction flow>
     // 1. 헤더의 버튼 클릭 ✓
     // 2. 클릭한 버튼에 따른 모달창 표출 ✓
         // 2.1 닫기 버튼 ✓
-        // 2.2 값 입력 후 등록 누르면 섹션(+ 컨텐츠) 렌더링
+        // 2.2 값 입력 후 등록 누르면 섹션(+ 컨텐츠) 렌더링 ✓
     // 3. 각 섹션의 삭제버튼
 
 interface Main {
-    list: Array<string>
+    toggleIsModal: (isModal: boolean) => void;
+    addSectionElement: (element: HTMLDivElement) => void;
     init(): void;
 }
 
 
 class ImplMain implements Main {
-    list: Array<string> = [];
+    private list: Array<HTMLDivElement> = [];
     isModal: boolean = false;
 
-    private renderList(): void {
+    private renderList = (list: Array<HTMLDivElement>): void => {
         // todo 추가, 삭제, 순서변경(+ 수정) 될때 호출되어야 한다
+        const container = document.querySelector('.main__section-container') as HTMLDivElement;
+        list.forEach(section => {
+            container.append(section);
+        })
     }
 
     toggleIsModal = (isModal: boolean): void => {
         this.isModal = isModal;
+    }
+
+    addSectionElement = (sectionElement: HTMLDivElement): void => {
+        this.list = [...this.list, sectionElement];
+        this.renderList(this.list);
     }
 
     private modalEvent = (
@@ -59,7 +61,8 @@ class ImplMain implements Main {
             const templateMaker: ModalMaker = new ImplModalMaker(
                 contentTemplateMaker,
                 sectionMaker,
-                this.toggleIsModal
+                this.toggleIsModal,
+                this.addSectionElement
             );
             body.append(templateMaker.makeModalElement());
             this.isModal = true;
@@ -80,10 +83,10 @@ class ImplMain implements Main {
         const noteSection : SectionMaker = new NoteSection();
         const taskSection : SectionMaker = new TaskSection();
 
-        this.modalEvent (imageButton, mediaModal, imageSection);
-        this.modalEvent (videoButton, mediaModal, videoSection);
-        this.modalEvent (noteButton,  textModal,  noteSection);
-        this.modalEvent (taskButton,  textModal,  taskSection);
+        this.modalEvent(imageButton, mediaModal, imageSection);
+        this.modalEvent(videoButton, mediaModal, videoSection);
+        this.modalEvent(noteButton,  textModal,  noteSection);
+        this.modalEvent(taskButton,  textModal,  taskSection);
     }
 
     init = (): void => {

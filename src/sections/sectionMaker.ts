@@ -9,13 +9,36 @@ import { SectionInfo } from "../modals/modalMaker.js";
 
 export interface SectionMaker {
     // create, edit, delete
-    readonly html: string;
     createSection(modalInfo: SectionInfo): HTMLDivElement;
 }
 
 export abstract class Section implements SectionMaker {
-    abstract html: string;
-    abstract createSection(modalInfo: SectionInfo): HTMLDivElement;
+    abstract makeSectionTemplate(title: string, urlOrBody: string): string;
+
+    private getSectionTemplate = (modalInfo: SectionInfo): string => {
+        if (modalInfo.url != null) {
+            const { title, url } = modalInfo;
+            const sectionTemplate = this.makeSectionTemplate(title, url as string);
+            return sectionTemplate;
+        }else {
+            const { title, body } = modalInfo;
+            const sectionTemplate = this.makeSectionTemplate(title, body as string);
+            return sectionTemplate
+        }
+    }
+
+    protected parseInfo = (modalInfo: SectionInfo): HTMLDivElement => {
+        const sectionTemplate = this.getSectionTemplate(modalInfo);
+        const sectionContainer = document.createElement('div');
+        sectionContainer.classList.add('section');
+        sectionContainer.innerHTML = sectionTemplate;
+        return sectionContainer;
+    }
+
+    createSection = (modalInfo: SectionInfo): HTMLDivElement => {
+        const section = this.parseInfo(modalInfo);
+        return section;
+    };
 }
 
 
