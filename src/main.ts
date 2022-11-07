@@ -6,43 +6,33 @@ import VideoSection from "./sections/videoSection.js";
 import NoteSection  from "./sections/noteSection.js";
 import TaskSection  from "./sections/taskSection.js";
 
-// - must have
-    // - As a user, I want to add an image ✓
-    // - As a user, I want to add YouTube video
-    // - As a user, I want to add a note ✓
-    // - As a user, I want to add Todolist ✓
-    // - As a user, I want to delete sections
-
-// < 스스로 고민해서 구현해보기 >
-
 // <interaction flow>
     // 1. 헤더의 버튼 클릭 ✓
     // 2. 클릭한 버튼에 따른 모달창 표출 ✓
         // 2.1 닫기 버튼 ✓
         // 2.2 값 입력 후 등록 누르면 섹션(+ 컨텐츠) 렌더링 ✓
-    // 3. 각 섹션의 삭제버튼
+    // 3. 각 섹션의 삭제버튼 ✓
 
 interface Main {
-    toggleIsModal: (isModal: boolean) => void;
+    setIsModal: (isModal: boolean) => void;
     addSectionElement: (element: HTMLDivElement) => void;
+    deleteSectionElement: (targetElement: HTMLDivElement) => void;
     init(): void;
 }
 
 
 class ImplMain implements Main {
     private list: Array<HTMLDivElement> = [];
-    isModal: boolean = false;
+    private isModal: boolean = false;
 
     private renderList = (list: Array<HTMLDivElement>): void => {
         // todo 추가, 삭제, 순서변경(+ 수정) 될때 호출되어야 한다
         const container = document.querySelector('.main__section-container') as HTMLDivElement;
-        container.innerHTML = '';
-        list.forEach(section => {
-            container.append(section);
-        })
+        container.replaceChildren();
+        list.forEach(section => container.append(section));
     }
 
-    toggleIsModal = (isModal: boolean): void => {
+    setIsModal = (isModal: boolean): void => {
         this.isModal = isModal;
     }
 
@@ -53,10 +43,8 @@ class ImplMain implements Main {
 
     deleteSectionElement = (sectionElement: HTMLDivElement): void => {
         this.list = [...this.list.filter(section => section !== sectionElement)];
-        console.log(this.list)
         this.renderList(this.list);
     }
-
 
     private modalEvent = (
         button: HTMLButtonElement,
@@ -69,11 +57,11 @@ class ImplMain implements Main {
             const templateMaker: ModalMaker = new ImplModalMaker(
                 contentTemplateMaker,
                 sectionMaker,
-                this.toggleIsModal,
+                this.setIsModal,
                 this.addSectionElement
             );
             body.append(templateMaker.makeModalElement());
-            this.isModal = true;
+            this.setIsModal(true);
         })
     }
 
@@ -86,7 +74,6 @@ class ImplMain implements Main {
         const mediaModal: ModalContentTemplateMaker = new MediaModal();
         const textModal : ModalContentTemplateMaker = new TextModal();
 
-        // todo filterList 함수 생성자로 넘겨주어야 한다
         const imageSection: SectionMaker = new ImageSection(this.deleteSectionElement);
         const videoSection: SectionMaker = new VideoSection(this.deleteSectionElement);
         const noteSection : SectionMaker = new NoteSection(this.deleteSectionElement);

@@ -1,16 +1,15 @@
 export class ImplModalMaker {
-    constructor(contentMaker, sectionMaker, toggleIsModal, addSectionElement) {
+    constructor(contentMaker, sectionMaker, setIsModal, addSectionElement) {
         this.contentMaker = contentMaker;
         this.sectionMaker = sectionMaker;
-        this.toggleIsModal = toggleIsModal;
+        this.setIsModal = setIsModal;
         this.addSectionElement = addSectionElement;
         this.closeModal = (modal) => {
             modal.remove();
-            this.toggleIsModal(false);
+            this.setIsModal(false);
         };
-        this.addSectionButtonClickHandler = (modal, modalInfo) => {
-            // (modalInfo: SectionInfo) => HTMLDivElement;
-            const sectionElement = this.sectionMaker.createSection(modalInfo);
+        this.sectionButtonClickHandler = (modal, modalInfo) => {
+            const sectionElement = this.sectionMaker.getSection(modalInfo);
             this.addSectionElement(sectionElement);
             this.closeModal(modal);
         };
@@ -26,15 +25,16 @@ export class ImplModalMaker {
                 const title = modal.querySelector('#title');
                 const url = modal.querySelector('#url');
                 const body = modal.querySelector('#body');
-                const sectionInfo = (url != null) ?
-                    { title: title.value, url: url.value } : { title: title.value, body: body.value };
-                this.addSectionButtonClickHandler(modal, sectionInfo);
+                const sectionType = this.sectionMaker.sectionType;
+                const sectionInfo = (sectionType === 'IMAGE' || sectionType === 'VIDEO')
+                    ? { title: title.value, url: url.value } : { title: title.value, body: body.value };
+                this.sectionButtonClickHandler(modal, sectionInfo);
             });
         };
         this.makeTemplate = () => {
             return (`
             <button class="modal__close">𝖷</button>
-                ${this.contentMaker.getModalTemplateContent()}
+            ${this.contentMaker.getModalContentTemplate()}
             <div class="modal__buttons">
                 <button class="modal__add-button">추가</button>
             </div>

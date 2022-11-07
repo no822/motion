@@ -1,7 +1,7 @@
 export class MediaModal {
     constructor() {
         // (title, url)
-        this.getModalTemplateContent = () => {
+        this.getModalContentTemplate = () => {
             return (`
             <div class="modal__input">
                 <label for="title" class="modal__input-label">title</label>
@@ -18,7 +18,7 @@ export class MediaModal {
 export class TextModal {
     constructor() {
         // (title, body)
-        this.getModalTemplateContent = () => {
+        this.getModalContentTemplate = () => {
             return (`
             <div class="modal__input">
                 <label for="title" class="modal__input-label">title</label>

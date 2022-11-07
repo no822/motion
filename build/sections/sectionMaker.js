@@ -1,8 +1,9 @@
 export class Section {
     constructor(deleteSection) {
         this.deleteSection = deleteSection;
+        this.defaultTitle = '&lt;기본 타이틀&gt;';
         this.getSectionTemplate = (modalInfo) => {
-            if (modalInfo.url != null) {
+            if (this.sectionType === 'IMAGE' || this.sectionType === 'VIDEO') {
                 const { title, url } = modalInfo;
                 const sectionTemplate = this.makeSectionTemplate(title, url);
                 return sectionTemplate;
@@ -20,15 +21,16 @@ export class Section {
             });
             return element;
         };
-        this.getSection = (modalInfo) => {
+        this.createSection = (modalInfo) => {
             const sectionTemplate = this.getSectionTemplate(modalInfo);
             const sectionContainer = document.createElement('div');
             sectionContainer.classList.add('section');
+            sectionContainer.id = this.sectionType;
             sectionContainer.innerHTML = sectionTemplate;
             return this.getElementWithDeleteEvent(sectionContainer);
         };
-        this.createSection = (modalInfo) => {
-            const section = this.getSection(modalInfo);
+        this.getSection = (modalInfo) => {
+            const section = this.createSection(modalInfo);
             return section;
         };
     }

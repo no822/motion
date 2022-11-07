@@ -11,12 +11,10 @@ class ImplMain {
         this.renderList = (list) => {
             // todo 추가, 삭제, 순서변경(+ 수정) 될때 호출되어야 한다
             const container = document.querySelector('.main__section-container');
-            container.innerHTML = '';
-            list.forEach(section => {
-                container.append(section);
-            });
+            container.replaceChildren();
+            list.forEach(section => container.append(section));
         };
-        this.toggleIsModal = (isModal) => {
+        this.setIsModal = (isModal) => {
             this.isModal = isModal;
         };
         this.addSectionElement = (sectionElement) => {
@@ -25,7 +23,6 @@ class ImplMain {
         };
         this.deleteSectionElement = (sectionElement) => {
             this.list = [...this.list.filter(section => section !== sectionElement)];
-            console.log(this.list);
             this.renderList(this.list);
         };
         this.modalEvent = (button, contentTemplateMaker, sectionMaker) => {
@@ -33,9 +30,9 @@ class ImplMain {
                 if (this.isModal)
                     return;
                 const body = (document.querySelector('body'));
-                const templateMaker = new ImplModalMaker(contentTemplateMaker, sectionMaker, this.toggleIsModal, this.addSectionElement);
+                const templateMaker = new ImplModalMaker(contentTemplateMaker, sectionMaker, this.setIsModal, this.addSectionElement);
                 body.append(templateMaker.makeModalElement());
-                this.isModal = true;
+                this.setIsModal(true);
             });
         };
         this.enrollEvent = () => {
@@ -45,7 +42,6 @@ class ImplMain {
             const taskButton = (document.querySelector('#task-button'));
             const mediaModal = new MediaModal();
             const textModal = new TextModal();
-            // todo filterList 함수 생성자로 넘겨주어야 한다
             const imageSection = new ImageSection(this.deleteSectionElement);
             const videoSection = new VideoSection(this.deleteSectionElement);
             const noteSection = new NoteSection(this.deleteSectionElement);
