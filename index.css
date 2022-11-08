@@ -214,28 +214,28 @@ footer {
 }
 
 /* 각 섹션 배경색 */
-#IMAGE {
+.IMAGE {
     background-color: rgba(27, 108, 234, 0.5);
 }
 #image-button {
     background-color: rgb(75 75 148);
 }
 
-#VIDEO {
+.VIDEO {
     background-color: rgba(224, 4, 4, 0.5);
 }
 #video-button {
     background-color: rgb(170 41 38);
 }
 
-#NOTE {
+.NOTE {
     background-color: rgba(4, 224, 48, 0.5);
 }
 #note-button {
     background-color: rgb(85 136 59);
 }
 
-#TASK {
+.TASK {
     background-color: rgba(215, 60, 245, 0.3);
 }
 #task-button {

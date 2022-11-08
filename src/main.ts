@@ -26,7 +26,6 @@ class ImplMain implements Main {
     private isModal: boolean = false;
 
     private renderList = (list: Array<HTMLDivElement>): void => {
-        // todo 추가, 삭제, 순서변경(+ 수정) 될때 호출되어야 한다
         const container = document.querySelector('.main__section-container') as HTMLDivElement;
         container.replaceChildren();
         list.forEach(section => container.append(section));
@@ -38,12 +37,13 @@ class ImplMain implements Main {
 
     addSectionElement = (sectionElement: HTMLDivElement): void => {
         this.list = [...this.list, sectionElement];
-        this.renderList(this.list);
+        const container = document.querySelector('.main__section-container') as HTMLDivElement;
+        container.append(sectionElement)
     }
 
     deleteSectionElement = (sectionElement: HTMLDivElement): void => {
         this.list = [...this.list.filter(section => section !== sectionElement)];
-        this.renderList(this.list);
+        sectionElement.remove();
     }
 
     private modalEvent = (

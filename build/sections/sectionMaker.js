@@ -25,7 +25,7 @@ export class Section {
             const sectionTemplate = this.getSectionTemplate(modalInfo);
             const sectionContainer = document.createElement('div');
             sectionContainer.classList.add('section');
-            sectionContainer.id = this.sectionType;
+            sectionContainer.classList.add(this.sectionType);
             sectionContainer.innerHTML = sectionTemplate;
             return this.getElementWithDeleteEvent(sectionContainer);
         };

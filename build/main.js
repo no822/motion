@@ -9,7 +9,6 @@ class ImplMain {
         this.list = [];
         this.isModal = false;
         this.renderList = (list) => {
-            // todo 추가, 삭제, 순서변경(+ 수정) 될때 호출되어야 한다
             const container = document.querySelector('.main__section-container');
             container.replaceChildren();
             list.forEach(section => container.append(section));
@@ -19,11 +18,12 @@ class ImplMain {
         };
         this.addSectionElement = (sectionElement) => {
             this.list = [...this.list, sectionElement];
-            this.renderList(this.list);
+            const container = document.querySelector('.main__section-container');
+            container.append(sectionElement);
         };
         this.deleteSectionElement = (sectionElement) => {
             this.list = [...this.list.filter(section => section !== sectionElement)];
-            this.renderList(this.list);
+            sectionElement.remove();
         };
         this.modalEvent = (button, contentTemplateMaker, sectionMaker) => {
             button.addEventListener('click', () => {

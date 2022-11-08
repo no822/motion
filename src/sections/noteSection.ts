@@ -18,7 +18,6 @@ class NoteSection extends Section {
              <button class="section__close">𝘹</button>
         `);
     }
-
 }
 
 export default NoteSection;
