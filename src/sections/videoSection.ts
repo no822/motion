@@ -1,10 +1,14 @@
 import { Section, SectionType } from "./sectionMaker.js";
+import { Drag } from "../dragEvent/drag.js";
 
 class VideoSection extends Section {
     public readonly sectionType: SectionType = 'VIDEO';
     private readonly defaultVideoId = 'u31qwQUeGuM';
-    constructor(deleteSection: (targetElement: HTMLDivElement) => void) {
-        super(deleteSection);
+    constructor(
+        deleteSection: (targetElement: HTMLDivElement) => void,
+        drag: Drag
+    ) {
+        super(deleteSection, drag);
     }
 
     private getVideoId = (url: string): string => {
@@ -16,12 +20,13 @@ class VideoSection extends Section {
 
     private getTemplate = (title: string, videoId: string): string => {
         return (`
-            <div class="video-area">
+            <div class="video-area" draggable="false">
                 <iframe 
                     src="https://www.youtube.com/embed/${videoId}" 
                     title="MOTION Image Section" 
                     allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen>
+                    allowfullscreen
+                >
                 </iframe>
             </div>
             <div class="title-area">

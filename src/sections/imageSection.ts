@@ -1,10 +1,14 @@
 import { Section, SectionType } from "./sectionMaker.js";
+import { Drag } from "../dragEvent/drag.js";
 
 class ImageSection extends Section {
     public readonly sectionType: SectionType = 'IMAGE';
     private readonly defaultImageUrl = 'https://via.placeholder.com/500x300.png?text=Please+Input+Valid+Image+Url';
-    constructor(deleteSection: (targetElement: HTMLDivElement) => void) {
-        super(deleteSection);
+    constructor(
+        deleteSection: (targetElement: HTMLDivElement) => void,
+        drag: Drag
+        ) {
+        super(deleteSection, drag);
     }
 
     private validateUrl = (url: string): string => {
@@ -15,8 +19,8 @@ class ImageSection extends Section {
 
     private getTemplate = (title: string, url: string): string => {
         return (`
-            <div class="image-area">
-                <img src=${url} alt="section image">
+            <div class="image-area" draggable="false">
+                <img src=${url} alt="section image" draggable="false">
             </div>
             <div class="title-area">
                 <div class="section__title">${(title.length === 0) ? this.defaultTitle : title}</div>

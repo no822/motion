@@ -57,7 +57,7 @@ main.main__section-container {
     background-color: rgba(23, 22, 22, 0.6);
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 25px;
     overflow-y: scroll;
     /* scrollbar hide */
     -ms-overflow-style: none; /* IE and Edge */
@@ -116,7 +116,6 @@ main.main__section-container::-webkit-scrollbar {
     font-weight: bold;
     font-size: 1.5rem;
     color: #e7d3bd;
-    user-select: none;
 }
 
 .section__task-container {
@@ -214,6 +213,7 @@ footer {
 }
 
 /* 각 섹션 배경색 */
+
 .IMAGE {
     background-color: rgba(27, 108, 234, 0.5);
 }
@@ -240,4 +240,8 @@ footer {
 }
 #task-button {
     background-color: rgb(116 43 115);
+}
+
+.dragging {
+    opacity: 0.2;
 }

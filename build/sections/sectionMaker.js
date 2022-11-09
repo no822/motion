@@ -1,6 +1,7 @@
 export class Section {
-    constructor(deleteSection) {
+    constructor(deleteSection, drag) {
         this.deleteSection = deleteSection;
+        this.drag = drag;
         this.defaultTitle = '&lt;기본 타이틀&gt;';
         this.getSectionTemplate = (modalInfo) => {
             if (this.sectionType === 'IMAGE' || this.sectionType === 'VIDEO') {
@@ -14,7 +15,9 @@ export class Section {
                 return sectionTemplate;
             }
         };
-        this.getElementWithDeleteEvent = (element) => {
+        this.getElementWithEvents = (element) => {
+            element.addEventListener('dragstart', this.drag.dragStartHandler, false);
+            element.addEventListener('dragend', this.drag.dragEndHandler, false);
             const deleteButton = element.querySelector('.section__close');
             deleteButton.addEventListener('click', () => {
                 this.deleteSection(element);
@@ -26,8 +29,9 @@ export class Section {
             const sectionContainer = document.createElement('div');
             sectionContainer.classList.add('section');
             sectionContainer.classList.add(this.sectionType);
+            sectionContainer.setAttribute('draggable', 'true');
             sectionContainer.innerHTML = sectionTemplate;
-            return this.getElementWithDeleteEvent(sectionContainer);
+            return this.getElementWithEvents(sectionContainer);
         };
         this.getSection = (modalInfo) => {
             const section = this.createSection(modalInfo);

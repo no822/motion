@@ -1,15 +1,19 @@
 import { Section, SectionType } from "./sectionMaker.js";
+import { Drag } from "../dragEvent/drag.js";
 
 class TaskSection extends Section {
     public readonly sectionType: SectionType = 'TASK';
     private defaultBody = `&lt;${this.sectionType} 내용을 입력해 주세요.&gt;`;
-    constructor(deleteSection: (targetElement: HTMLDivElement) => void) {
-        super(deleteSection);
+    constructor(
+        deleteSection: (targetElement: HTMLDivElement) => void,
+        drag: Drag
+    ) {
+        super(deleteSection, drag);
     }
 
     makeSectionTemplate = (title: string, body: string): string => {
         return (`
-            <div class="title-area">
+            <div class="title-area" draggable="false">
                 <div class="section__title--container">
                     <div class="section__title">${(title.length === 0) ? this.defaultTitle : title}</div>
                     <div class="section__task-container">

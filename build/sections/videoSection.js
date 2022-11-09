@@ -1,7 +1,7 @@
 import { Section } from "./sectionMaker.js";
 class VideoSection extends Section {
-    constructor(deleteSection) {
-        super(deleteSection);
+    constructor(deleteSection, drag) {
+        super(deleteSection, drag);
         this.sectionType = 'VIDEO';
         this.defaultVideoId = 'u31qwQUeGuM';
         this.getVideoId = (url) => {
@@ -13,12 +13,13 @@ class VideoSection extends Section {
         };
         this.getTemplate = (title, videoId) => {
             return (`
-            <div class="video-area">
+            <div class="video-area" draggable="false">
                 <iframe 
                     src="https://www.youtube.com/embed/${videoId}" 
                     title="MOTION Image Section" 
                     allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen>
+                    allowfullscreen
+                >
                 </iframe>
             </div>
             <div class="title-area">

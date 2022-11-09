@@ -1,10 +1,11 @@
-import { MediaModal, ModalContentTemplateMaker, TextModal } from "./modals/modalTemplate.js";
+import { MediaModal, TextModal, ModalContentTemplateMaker } from "./modals/modalTemplate.js";
 import { ModalMaker, ImplModalMaker } from "./modals/modalMaker.js";
 import { SectionMaker } from "./sections/sectionMaker.js";
 import ImageSection from "./sections/imageSection.js";
 import VideoSection from "./sections/videoSection.js";
 import NoteSection  from "./sections/noteSection.js";
 import TaskSection  from "./sections/taskSection.js";
+import { Drag, DragHandler } from "./dragEvent/drag.js";
 
 // <interaction flow>
     // 1. 헤더의 버튼 클릭 ✓
@@ -13,36 +14,58 @@ import TaskSection  from "./sections/taskSection.js";
         // 2.2 값 입력 후 등록 누르면 섹션(+ 컨텐츠) 렌더링 ✓
     // 3. 각 섹션의 삭제버튼 ✓
 
+// - good to have
+    // - As a user, I want to reorder sections by dragging
+
 interface Main {
-    setIsModal: (isModal: boolean) => void;
-    addSectionElement: (element: HTMLDivElement) => void;
-    deleteSectionElement: (targetElement: HTMLDivElement) => void;
     init(): void;
 }
-
 
 class ImplMain implements Main {
     private list: Array<HTMLDivElement> = [];
     private isModal: boolean = false;
 
     private renderList = (list: Array<HTMLDivElement>): void => {
-        const container = document.querySelector('.main__section-container') as HTMLDivElement;
+        // todo 호출될때마다 전체리스트 갱신되어서 깜박임 현상 발생 => 변경되는 부분만 갱신할 수 없을까?
+        const container = document.querySelector('.title') as HTMLDivElement;
         container.replaceChildren();
         list.forEach(section => container.append(section));
     }
 
-    setIsModal = (isModal: boolean): void => {
+    private syncList = () => {
+        const container = document.querySelector('.main__section-container') as HTMLDivElement;
+        const list: Array<HTMLDivElement> = Array.from(container.querySelectorAll('.section'));
+        this.list = list;
+    }
+
+    private setListIndex = () => {
+        this.list.forEach((section, index) => {
+            section.setAttribute('id', `section_${(index + 1)}`);
+        })
+        return this.list;
+    }
+
+    private refreshList = () => {
+        // list 순서가 변경 후 인덱스 재정렬
+        this.syncList();
+        return this.setListIndex();
+    }
+
+    private setIsModal = (isModal: boolean): void => {
         this.isModal = isModal;
     }
 
-    addSectionElement = (sectionElement: HTMLDivElement): void => {
+    private addSectionElement = (sectionElement: HTMLDivElement): void => {
+        const index: string = (this.list.length + 1).toString();
+        sectionElement.setAttribute('id', `section_${index}`);
         this.list = [...this.list, sectionElement];
         const container = document.querySelector('.main__section-container') as HTMLDivElement;
-        container.append(sectionElement)
+        container.append(sectionElement);
     }
 
-    deleteSectionElement = (sectionElement: HTMLDivElement): void => {
+    private deleteSectionElement = (sectionElement: HTMLDivElement): void => {
         this.list = [...this.list.filter(section => section !== sectionElement)];
+        this.setListIndex();
         sectionElement.remove();
     }
 
@@ -65,6 +88,12 @@ class ImplMain implements Main {
         })
     }
 
+    private dropEvent = (drag: Drag): void => {
+        const container = document.querySelector('main.main__section-container') as HTMLElement;
+        container.addEventListener('dragover', drag.dragOverHandler, false);
+        container.addEventListener('drop', drag.dropHandler, false);
+    }
+
     private enrollEvent = (): void => {
         const imageButton: HTMLButtonElement = (document.querySelector('#image-button')) as HTMLButtonElement;
         const videoButton: HTMLButtonElement = (document.querySelector('#video-button')) as HTMLButtonElement;
@@ -74,15 +103,20 @@ class ImplMain implements Main {
         const mediaModal: ModalContentTemplateMaker = new MediaModal();
         const textModal : ModalContentTemplateMaker = new TextModal();
 
-        const imageSection: SectionMaker = new ImageSection(this.deleteSectionElement);
-        const videoSection: SectionMaker = new VideoSection(this.deleteSectionElement);
-        const noteSection : SectionMaker = new NoteSection(this.deleteSectionElement);
-        const taskSection : SectionMaker = new TaskSection(this.deleteSectionElement);
+        const dragEvent: Drag = new DragHandler(this.refreshList);
+
+        const imageSection: SectionMaker = new ImageSection(this.deleteSectionElement, dragEvent);
+        const videoSection: SectionMaker = new VideoSection(this.deleteSectionElement, dragEvent);
+        const noteSection : SectionMaker = new NoteSection(this.deleteSectionElement,  dragEvent);
+        const taskSection : SectionMaker = new TaskSection(this.deleteSectionElement,  dragEvent);
+
+        this.dropEvent(dragEvent);
 
         this.modalEvent(imageButton, mediaModal, imageSection);
         this.modalEvent(videoButton, mediaModal, videoSection);
         this.modalEvent(noteButton,  textModal,  noteSection);
         this.modalEvent(taskButton,  textModal,  taskSection);
+
     }
 
     init = (): void => {
@@ -91,6 +125,6 @@ class ImplMain implements Main {
     }
 }
 
-const main = new ImplMain();
+const main: Main = new ImplMain();
 main.init();
 

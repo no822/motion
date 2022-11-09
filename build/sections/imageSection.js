@@ -1,7 +1,7 @@
 import { Section } from "./sectionMaker.js";
 class ImageSection extends Section {
-    constructor(deleteSection) {
-        super(deleteSection);
+    constructor(deleteSection, drag) {
+        super(deleteSection, drag);
         this.sectionType = 'IMAGE';
         this.defaultImageUrl = 'https://via.placeholder.com/500x300.png?text=Please+Input+Valid+Image+Url';
         this.validateUrl = (url) => {
@@ -12,8 +12,8 @@ class ImageSection extends Section {
         };
         this.getTemplate = (title, url) => {
             return (`
-            <div class="image-area">
-                <img src=${url} alt="section image">
+            <div class="image-area" draggable="false">
+                <img src=${url} alt="section image" draggable="false">
             </div>
             <div class="title-area">
                 <div class="section__title">${(title.length === 0) ? this.defaultTitle : title}</div>
