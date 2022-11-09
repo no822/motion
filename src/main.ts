@@ -15,7 +15,7 @@ import { Drag, DragHandler } from "./dragEvent/drag.js";
     // 3. 각 섹션의 삭제버튼 ✓
 
 // - good to have
-    // - As a user, I want to reorder sections by dragging
+    // - As a user, I want to reorder sections by dragging ✓
 
 interface Main {
     init(): void;
@@ -24,13 +24,6 @@ interface Main {
 class ImplMain implements Main {
     private list: Array<HTMLDivElement> = [];
     private isModal: boolean = false;
-
-    private renderList = (list: Array<HTMLDivElement>): void => {
-        // todo 호출될때마다 전체리스트 갱신되어서 깜박임 현상 발생 => 변경되는 부분만 갱신할 수 없을까?
-        const container = document.querySelector('.title') as HTMLDivElement;
-        container.replaceChildren();
-        list.forEach(section => container.append(section));
-    }
 
     private syncList = () => {
         const container = document.querySelector('.main__section-container') as HTMLDivElement;
@@ -90,8 +83,8 @@ class ImplMain implements Main {
 
     private dropEvent = (drag: Drag): void => {
         const container = document.querySelector('main.main__section-container') as HTMLElement;
-        container.addEventListener('dragover', drag.dragOverHandler, false);
-        container.addEventListener('drop', drag.dropHandler, false);
+        container.addEventListener('dragover', drag.dragOverHandler);
+        container.addEventListener('drop', drag.dropHandler);
     }
 
     private enrollEvent = (): void => {
@@ -120,7 +113,7 @@ class ImplMain implements Main {
     }
 
     init = (): void => {
-        console.log('init');
+        console.log('init!');
         this.enrollEvent();
     }
 }

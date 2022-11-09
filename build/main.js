@@ -9,12 +9,6 @@ class ImplMain {
     constructor() {
         this.list = [];
         this.isModal = false;
-        this.renderList = (list) => {
-            // todo 호출될때마다 전체리스트 갱신되어서 깜박임 현상 발생 => 변경되는 부분만 갱신할 수 없을까?
-            const container = document.querySelector('.title');
-            container.replaceChildren();
-            list.forEach(section => container.append(section));
-        };
         this.syncList = () => {
             const container = document.querySelector('.main__section-container');
             const list = Array.from(container.querySelectorAll('.section'));
@@ -58,8 +52,8 @@ class ImplMain {
         };
         this.dropEvent = (drag) => {
             const container = document.querySelector('main.main__section-container');
-            container.addEventListener('dragover', drag.dragOverHandler, false);
-            container.addEventListener('drop', drag.dropHandler, false);
+            container.addEventListener('dragover', drag.dragOverHandler);
+            container.addEventListener('drop', drag.dropHandler);
         };
         this.enrollEvent = () => {
             const imageButton = (document.querySelector('#image-button'));
@@ -80,7 +74,7 @@ class ImplMain {
             this.modalEvent(taskButton, textModal, taskSection);
         };
         this.init = () => {
-            console.log('init');
+            console.log('init!');
             this.enrollEvent();
         };
     }

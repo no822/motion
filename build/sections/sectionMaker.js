@@ -16,8 +16,10 @@ export class Section {
             }
         };
         this.getElementWithEvents = (element) => {
-            element.addEventListener('dragstart', this.drag.dragStartHandler, false);
-            element.addEventListener('dragend', this.drag.dragEndHandler, false);
+            element.addEventListener('dragstart', this.drag.dragStartHandler);
+            element.addEventListener('dragend', this.drag.dragEndHandler);
+            element.addEventListener('dragenter', e => e.preventDefault());
+            element.addEventListener('dragover', e => e.preventDefault());
             const deleteButton = element.querySelector('.section__close');
             deleteButton.addEventListener('click', () => {
                 this.deleteSection(element);
