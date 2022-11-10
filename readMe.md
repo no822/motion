@@ -1,3 +1,5 @@
+demo : https://no822.github.io/
+
 - <Motion 프로젝트 계획>
 
   - 강의 내용 시청 전 직접 구현해보기

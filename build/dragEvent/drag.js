@@ -21,28 +21,28 @@ export class DragHandler {
         };
         this.isAppendWrongContainer = (childContainer) => {
             const sections = document.querySelectorAll('.section');
-            const isWrongAppend = Array.from(sections).map(section => section.contains(childContainer)).some(isChild => isChild);
-            return isWrongAppend;
+            return Array.from(sections)
+                .map(section => section.contains(childContainer))
+                .some(isChild => isChild);
         };
         this.getAfterElement = (container, elementId, targetY) => {
-            const listExceptTarget = ([...container.querySelectorAll(`.section:not(#${elementId})`)]);
-            const afterElement = listExceptTarget
-                .filter(section => {
+            const elementsExceptTarget = ([...container.querySelectorAll(`.section:not(#${elementId})`)]);
+            const afterElements = elementsExceptTarget.filter(section => {
                 const { height, y } = section.getBoundingClientRect();
                 const offsetY = targetY - (y + (height / 2));
                 return offsetY < 0;
-            })[0];
-            return afterElement;
+            });
+            return afterElements[0];
         };
         this.dropHandler = (e) => {
             if (e.dataTransfer != null && e.target instanceof HTMLElement) {
                 const container = e.target;
                 if (this.isAppendWrongContainer(container))
                     return;
+                e.dataTransfer.dropEffect = "move";
                 const elementId = e.dataTransfer.getData(this.mimeType);
                 const movedElement = document.getElementById(elementId);
                 const afterElement = this.getAfterElement(container, elementId, e.y);
-                e.dataTransfer.dropEffect = "move";
                 afterElement
                     ? container.insertBefore(movedElement, afterElement)
                     : container.append(movedElement);
