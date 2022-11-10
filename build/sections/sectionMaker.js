@@ -33,11 +33,11 @@ export class Section {
             sectionContainer.classList.add(this.sectionType);
             sectionContainer.setAttribute('draggable', 'true');
             sectionContainer.innerHTML = sectionTemplate;
-            return this.getElementWithEvents(sectionContainer);
+            return sectionContainer;
         };
         this.getSection = (modalInfo) => {
             const section = this.createSection(modalInfo);
-            return section;
+            return this.getElementWithEvents(section);
         };
     }
 }

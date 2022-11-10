@@ -51,12 +51,12 @@ export abstract class Section implements SectionMaker {
         sectionContainer.classList.add(this.sectionType);
         sectionContainer.setAttribute('draggable', 'true');
         sectionContainer.innerHTML = sectionTemplate;
-        return this.getElementWithEvents(sectionContainer);
+        return sectionContainer;
     }
 
     getSection = (modalInfo: SectionInfo): HTMLDivElement => {
         const section = this.createSection(modalInfo);
-        return section;
+        return this.getElementWithEvents(section);
     }
 }
 
